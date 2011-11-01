@@ -278,6 +278,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-doap-plugin</artifactId>
+        <version>${maven-doap-plugin.version}</version>
         <executions>
           <execution>
             <id>site</id>
@@ -300,8 +301,9 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
+        <version>${exec-maven-plugin.version}</version>
         <configuration>
-          <mainClass>org.jenkinsci.backend.github.Lister</mainClass>
+          <mainClass>org.jenkins.ci.backend.plugin_report_card.Main</mainClass>
         </configuration>
       </plugin>
     </plugins>
