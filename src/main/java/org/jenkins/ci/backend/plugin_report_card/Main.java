@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package org.jenkins.ci.backend.plugin_report;
+package org.jenkins.ci.backend.plugin_report_card;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

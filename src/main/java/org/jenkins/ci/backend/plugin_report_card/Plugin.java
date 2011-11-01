@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package org.jenkins.ci.backend.plugin_report;
+package org.jenkins.ci.backend.plugin_report_card;
 
 import org.apache.axis.utils.StringUtils;
 import org.apache.commons.lang.builder.CompareToBuilder;

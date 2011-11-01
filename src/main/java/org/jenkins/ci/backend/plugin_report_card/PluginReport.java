@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package org.jenkins.ci.backend.plugin_report;
+package org.jenkins.ci.backend.plugin_report_card;
 
 import java.net.MalformedURLException;
 import java.net.URL;

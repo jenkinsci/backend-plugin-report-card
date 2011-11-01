@@ -1,0 +1,22 @@
+{warning:title='Automatically Generated Content'}
+This page is automatically generated, any edits you make will be lost!
+{warning}
+
+\\
+
+This page attempts to draw attention to Jenkins plug-ins which require an old, sometimes *very* old, version of Jenkins -- this is known to developers as the 'Required Core'. Having lots of disparate required core versions makes it painful for developers to fix bugs in lots of plug-ins concurrently because Maven will suffer from "download the internet" syndrome due to the multitude of dependencies required to make Jenkins function.
+
+Therefore it is in the interest of both developers and users to rally around specific versions of the core.. and hence, this automated page. 
+
+\\
+
+|| Required Core || Group Id || Artifact Id || Version || SCM ||
+#foreach( ${oldPlugin} in ${oldPlugins} )
+| $!{oldPlugin.parentVersion} | $!{oldPlugin.effectiveGroupId} | $!{oldPlugin.effectiveArtifactId} | $!{oldPlugin.effectiveVersion} | [$!{oldPlugin.repositoryUrl}] |
+#end
+
+\\
+
+This page was automatically generated on $!{now} by [https://github.com/jenkinsci/backend-plugin-report-card].
+
+\\

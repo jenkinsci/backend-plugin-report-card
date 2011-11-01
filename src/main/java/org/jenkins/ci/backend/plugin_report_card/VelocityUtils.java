@@ -22,57 +22,58 @@
  * THE SOFTWARE.
  */
 
-package org.jenkins.ci.backend.plugin_report;
+package org.jenkins.ci.backend.plugin_report_card;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.HashMap;
+import java.io.StringWriter;
 import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.maven.model.Model;
-import org.apache.maven.model.io.DefaultModelReader;
-import org.apache.maven.model.io.ModelReader;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.Velocity;
 
 /**
  * @author <a href="mailto:jieryn@gmail.com">Jesse Farinacci</a>
  * @since 1.0
  */
-public final class MavenUtils {
-    private static final Map<String, Object> MAVEN_MODEL_OPTIONS = new HashMap<String, Object>();
-
+public final class VelocityUtils {
     static {
-        MAVEN_MODEL_OPTIONS.put(ModelReader.IS_STRICT, Boolean.FALSE);
-    }
-
-    public static Model getModel(final URL url) {
-        if (url != null) {
-            InputStream inputStream = null;
-
-            try {
-                inputStream = url.openStream();
-
-                return new DefaultModelReader().read(inputStream,
-                        MAVEN_MODEL_OPTIONS);
-            }
-
-            catch (final IOException e) {
-                // fall through
-            }
-
-            finally {
-                IOUtils.closeQuietly(inputStream);
-            }
+        try {
+            Velocity.init();
         }
 
-        return null;
+        catch (final Exception e) {
+            throw new Error(e);
+        }
+    }
+
+    public static VelocityContext getVelocityContext(
+            final Map<String, ?> properties) {
+        return new VelocityContext(properties);
+    }
+
+    public static Template getVelocityTemplate(final String vm)
+            throws Exception {
+        return Velocity.getTemplate("src/main/resources/"
+                + VelocityUtils.class.getPackage().getName()
+                        .replaceAll("\\.", "/") + "/" + vm);
+    }
+
+    public static String interpolate(final Template template,
+            final Map<String, ?> properties) throws Exception {
+        return interpolate(template, getVelocityContext(properties));
+    }
+
+    public static String interpolate(final Template template,
+            final VelocityContext context) throws Exception {
+        final StringWriter writer = new StringWriter();
+        template.merge(context, writer);
+        return writer.toString();
     }
 
     /**
      * Static-only access.
      */
-    private MavenUtils() {
+    private VelocityUtils() {
         // static-only access
     }
 }

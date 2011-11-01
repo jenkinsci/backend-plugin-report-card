@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package org.jenkins.ci.backend.plugin_report;
+package org.jenkins.ci.backend.plugin_report_card;
 
 import hudson.plugins.jira.soap.ConfluenceSoapService;
 import hudson.plugins.jira.soap.RemotePage;
