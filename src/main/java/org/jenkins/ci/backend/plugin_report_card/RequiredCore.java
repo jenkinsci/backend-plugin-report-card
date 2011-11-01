@@ -24,42 +24,58 @@
 
 package org.jenkins.ci.backend.plugin_report_card;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.apache.commons.lang.StringUtils;
-
 /**
  * @author <a href="mailto:jieryn@gmail.com">Jesse Farinacci</a>
  * @since 1.0
  */
-public final class Main implements Runnable {
-    private static final Logger LOG = Logger.getLogger(Main.class.getName());
+public final class RequiredCore implements Comparable<RequiredCore> {
 
-    public static void main(final String[] args) {
-        new Main().run();
+    private final String name;
+
+    private int          count;
+
+    public RequiredCore(final String name) {
+        super();
+
+        this.name = name;
     }
 
-    public void run() {
-        try {
-            WikiUpdater.validateConfiguration();
-
-            final String report = PluginReport.generatePluginReport();
-
-            if (LOG.isLoggable(Level.FINE)) {
-                LOG.fine(report);
-            }
-
-            if (StringUtils.isNotEmpty(report)) {
-                WikiUpdater.updateWikiPage("Plugin Report Card", report);
-            }
+    public int compareTo(final RequiredCore other) {
+        if (this == other) {
+            return 0;
         }
 
-        catch (final Exception e) {
-            LOG.warning(e.getMessage());
-            if (LOG.isLoggable(Level.INFO)) {
-                LOG.log(Level.INFO, e.getMessage(), e);
-            }
+        return name.compareTo(other.getName());
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
         }
+
+        if (!(obj instanceof RequiredCore)) {
+            return false;
+        }
+
+        final RequiredCore other = (RequiredCore) obj;
+        return name.equals(other.getName());
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
+    public void increment() {
+        count++;
     }
 }

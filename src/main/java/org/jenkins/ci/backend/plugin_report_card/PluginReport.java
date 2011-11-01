@@ -28,6 +28,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -56,7 +57,8 @@ public final class PluginReport {
     protected static String generatePluginReport(
             final Collection<GHRepository> repositories) throws Exception {
         if (repositories != null) {
-            final SortedSet<Plugin> oldPlugins = new TreeSet<Plugin>();
+            final Map<String, RequiredCore> requiredCores = new HashMap<String, RequiredCore>();
+            final SortedSet<Plugin> plugins = new TreeSet<Plugin>();
             // int idx = 0;
             for (final GHRepository repository : repositories) {
                 // if (++idx > 20) {
@@ -72,12 +74,23 @@ public final class PluginReport {
                 if (model != null) {
                     final Plugin plugin = new Plugin(repository, model);
                     if (plugin.isJenkinsPlugin() || plugin.isOldHudsonPlugin()) {
-                        oldPlugins.add(plugin);
+                        if (!requiredCores.containsKey(plugin
+                                .getParentVersion())) {
+                            requiredCores
+                                    .put(plugin.getParentVersion(),
+                                            new RequiredCore(plugin
+                                                    .getParentVersion()));
+                        }
+
+                        requiredCores.get(plugin.getParentVersion())
+                                .increment();
+                        plugins.add(plugin);
                     }
                 }
             }
 
-            return generatePluginReport(oldPlugins);
+            return generatePluginReport(plugins, new TreeSet<RequiredCore>(
+                    requiredCores.values()));
         }
 
         return null;
@@ -111,10 +124,12 @@ public final class PluginReport {
     }
 
     protected static String generatePluginReport(
-            final SortedSet<Plugin> oldPlugins) throws Exception {
+            final SortedSet<Plugin> plugins,
+            final SortedSet<RequiredCore> requiredCores) throws Exception {
         final VelocityContext context = new VelocityContext();
         context.put("now", new Date());
-        context.put("oldPlugins", oldPlugins);
+        context.put("requiredCores", requiredCores);
+        context.put("plugins", plugins);
 
         return VelocityUtils.interpolate(
                 VelocityUtils.getVelocityTemplate("pluginReportCard.vm"),
