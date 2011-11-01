@@ -14,7 +14,7 @@ Therefore it is in the interest of both developers and users to rally around spe
 
 h2. Charts
 
-{chart:title=Distribution|legend=false}
+{chart:title=Distribution|type=bar|width=800}
 || Required Core ||#foreach( ${requiredCore} in ${requiredCores} ) $!{requiredCore.name} ||#end
 
 || Required Core |#foreach( ${requiredCore} in ${requiredCores} ) $!{requiredCore.count} |#end
