@@ -17,7 +17,7 @@ h2. Charts
 {chart:title=Distribution|type=bar|width=800}
 || Required Core ||#foreach( ${requiredCore} in ${requiredCores} ) $!{requiredCore.name} ||#end
 
-|| Required Core |#foreach( ${requiredCore} in ${requiredCores} ) $!{requiredCore.count} |#end
+|| Total Plugins |#foreach( ${requiredCore} in ${requiredCores} ) $!{requiredCore.count} |#end
 {chart}
 
 \\
