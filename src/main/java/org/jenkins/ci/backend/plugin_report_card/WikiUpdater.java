@@ -93,7 +93,7 @@ public final class WikiUpdater {
             final String contents) throws IOException, ServiceException {
         if (LOG.isLoggable(Level.INFO)) {
             LOG.info("Updating " + pageName + " with "
-                    + contents.substring(0, Math.min(128, contents.length()))
+                    + contents.substring(0, Math.min(512, contents.length()))
                     + " ... ");
         }
 
