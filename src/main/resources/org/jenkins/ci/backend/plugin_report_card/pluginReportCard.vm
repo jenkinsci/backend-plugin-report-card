@@ -14,11 +14,19 @@ Therefore it is in the interest of both developers and users to rally around spe
 
 h2. Charts
 
+To help visualize how disparate the required core versions are, here is a graph which depicts the total number of plugins at each required core version. The chart ranges on the x-axis from 1.300 to 1.500.
+
+\\
+
 {chart:title=Distribution|type=bar|width=800}
 || Required Core ||#foreach( ${requiredCore} in ${requiredCores} ) $!{requiredCore.name} ||#end
 
 || Total Plugins |#foreach( ${requiredCore} in ${requiredCores} ) $!{requiredCore.count} |#end
 {chart}
+
+\\
+
+h2. Plugin Required Core Data
 
 \\
 
