@@ -57,8 +57,9 @@ public final class PluginReport {
     protected static String generatePluginReport(
             final Collection<GHRepository> repositories) throws Exception {
         if (repositories != null) {
-            final Map<String, RequiredCore> requiredCores = new HashMap<String, RequiredCore>();
+            final Map<String, RequiredCore> requiredCores = getRequiredCoreMap();
             final SortedSet<Plugin> plugins = new TreeSet<Plugin>();
+
             // int idx = 0;
             for (final GHRepository repository : repositories) {
                 // if (++idx > 20) {
@@ -149,5 +150,16 @@ public final class PluginReport {
         }
 
         return new URL(url + "/raw/master/pom.xml");
+    }
+
+    protected static Map<String, RequiredCore> getRequiredCoreMap() {
+        final Map<String, RequiredCore> requiredCores = new HashMap<String, RequiredCore>();
+
+        for (int requiredCore = 300; requiredCore <= 500; requiredCore++) {
+            final String version = "1." + Integer.toString(requiredCore);
+            requiredCores.put(version, new RequiredCore(version));
+        }
+
+        return requiredCores;
     }
 }
