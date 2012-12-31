@@ -155,7 +155,7 @@ public final class PluginReport {
     protected static Map<String, RequiredCore> getRequiredCoreMap() {
         final Map<String, RequiredCore> requiredCores = new HashMap<String, RequiredCore>();
 
-        for (int requiredCore = 300; requiredCore <= 500; requiredCore++) {
+        for (int requiredCore = 300; requiredCore <= 600; requiredCore++) {
             final String version = "1." + Integer.toString(requiredCore);
             requiredCores.put(version, new RequiredCore(version));
         }
